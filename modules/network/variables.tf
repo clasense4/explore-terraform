@@ -51,3 +51,8 @@ variable "map_public_ip_on_launch" {
   type        = bool
   default     = true
 }
+
+variable "vpn_cidr_block" {
+  description = "VPN CIDR block to access public subnet"
+  type        = list(string)
+}

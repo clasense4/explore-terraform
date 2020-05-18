@@ -18,4 +18,5 @@ module "network" {
   public_subnets       = var.public_subnets
   private_subnets      = var.private_subnets
   enable_dns_hostnames = var.enable_dns_hostnames
+  vpn_cidr_block       = var.vpn_cidr_block
 }
