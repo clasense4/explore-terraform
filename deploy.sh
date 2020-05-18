@@ -34,8 +34,8 @@ function main() {
     # Stack choose
     if [ "${stack}" = ${_STACK_OPTION_NETWORK} ]; then
         deploy
-        terraform plan -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
-        # terraform apply -var-file="../vars/global.tfvars" -var-file="vars/${stack}.tfvars" -auto-approve
+        # terraform plan -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
+        terraform apply -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars" -auto-approve
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
         terraform plan -var-file="../vars/global.tfvars"
