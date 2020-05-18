@@ -10,10 +10,11 @@ provider "aws" {
 }
 
 module "network" {
-  source         = "../modules/network"
-  name           = var.name
-  cidr_block     = var.cidr_block
-  tags           = var.tags
-  azs            = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
-  public_subnets = ["10.0.32.0/20", "10.0.96.0/20", "10.0.160.0/20"]
+  source          = "../modules/network"
+  name            = var.name
+  cidr_block      = var.cidr_block
+  tags            = var.tags
+  azs             = var.azs
+  public_subnets  = var.public_subnets
+  private_subnets = var.private_subnets
 }

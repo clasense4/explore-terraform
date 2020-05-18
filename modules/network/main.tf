@@ -21,7 +21,7 @@ resource "aws_subnet" "public" {
   availability_zone       = element(concat(var.azs, [""]), count.index)
   map_public_ip_on_launch = var.map_public_ip_on_launch
   tags = {
-    Name = "${var.name}_subnet_${count.index}"
+    Name = "${var.name}_public_${count.index}"
   }
 }
 
@@ -54,5 +54,20 @@ resource "aws_route" "public_igw_route" {
 
   timeouts {
     create = "5m"
+  }
+}
+
+################
+# Private subnet
+################
+resource "aws_subnet" "private" {
+  count = length(var.private_subnets) > 0 && (length(var.private_subnets) >= length(var.azs)) ? length(var.private_subnets) : 0
+
+  vpc_id                  = aws_vpc.this.id
+  cidr_block              = element(concat(var.private_subnets, [""]), count.index)
+  availability_zone       = element(concat(var.azs, [""]), count.index)
+
+  tags = {
+    Name = "${var.name}_private_${count.index}"
   }
 }

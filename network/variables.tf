@@ -40,6 +40,12 @@ variable "public_subnets" {
   default     = []
 }
 
+variable "private_subnets" {
+  description = "List of private subnets for the VPC"
+  type        = list(string)
+  default     = []
+}
+
 variable "map_public_ip_on_launch" {
   description = "Auto assign public IP"
   type        = bool
