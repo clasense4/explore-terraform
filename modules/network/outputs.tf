@@ -32,3 +32,13 @@ output "private_subnet_2" {
   description = "Private Subnet 2"
   value       = aws_subnet.private[2].id
 }
+
+output "public_subnet_sg" {
+  description = "Public Subnet Security Group"
+  value       = aws_security_group.default_public.id
+}
+
+output "private_subnet_sg" {
+  description = "Private Subnet Security Group"
+  value       = aws_security_group.default_private.id
+}
