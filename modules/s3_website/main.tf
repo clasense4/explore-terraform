@@ -3,7 +3,6 @@
 ################
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
-  acl    = "public-read"
   policy = <<EOF
 {
     "Version": "2012-10-17",
@@ -12,12 +11,8 @@ resource "aws_s3_bucket" "this" {
             "Sid": "PublicReadGetObject",
             "Effect": "Allow",
             "Principal": "*",
-            "Action": [
-                "s3:GetObject"
-            ],
-            "Resource": [
-                "arn:aws:s3:::${var.bucket_name}/*"
-            ]
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::${var.bucket_name}/*"
         }
     ]
 }
@@ -29,11 +24,23 @@ resource "aws_s3_bucket" "this" {
   }
 }
 
+resource "aws_s3_bucket_object" "indexhtml" {
+  bucket = var.bucket_name
+  key    = "index.html"
+  source = "s3_object/index.html"
+}
+
 ################
 # AWS SSM Parameters Output
 ################
 resource "aws_ssm_parameter" "public_s3_website" {
-  name  = "/${var.name}/public_s3_website"
+  name  = "/${var.name}/s3/website_endpoint"
   type  = "String"
-  value = aws_s3_bucket.this.website_domain
+  value = aws_s3_bucket.this.website_endpoint
+}
+
+resource "aws_ssm_parameter" "bucket_name" {
+  name  = "/${var.name}/s3/bucket_name"
+  type  = "String"
+  value = aws_s3_bucket.this.bucket
 }

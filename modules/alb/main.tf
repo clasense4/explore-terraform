@@ -60,11 +60,12 @@ resource "aws_alb_listener" "http_listener" {
   protocol          = "HTTP"
 
   default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301"
+    type = "fixed-response"
+
+    fixed_response {
+      content_type = "text/plain"
+      message_body = "ok"
+      status_code  = "200"
     }
   }
 }
