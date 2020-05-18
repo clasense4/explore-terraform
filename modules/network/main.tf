@@ -28,7 +28,7 @@ resource "aws_subnet" "public" {
 resource "aws_route_table_association" "public" {
   count = length(var.public_subnets) > 0 ? length(var.public_subnets) : 0
 
-  subnet_id = element(aws_subnet.public.*.id, count.index)
+  subnet_id      = element(aws_subnet.public.*.id, count.index)
   route_table_id = aws_route_table.public.id
 }
 
@@ -65,10 +65,10 @@ resource "aws_route" "public_igw_route" {
 }
 
 ################
-# Default Security Group
+# Default Public Subnet Security Group
 ################
-resource "aws_security_group" "default" {
-  name        = "${var.name}_public_sg"
+resource "aws_security_group" "default_public" {
+  name        = "${var.name}_default_public_sg"
   description = "${var.name} default public SG"
   vpc_id      = aws_vpc.this.id
 
@@ -95,10 +95,10 @@ resource "aws_security_group" "default" {
   }
 
   egress {
-    from_port       = 0
-    to_port         = 0
-    protocol        = "-1"
-    cidr_blocks     = ["0.0.0.0/0"]
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   tags = {
@@ -112,11 +112,29 @@ resource "aws_security_group" "default" {
 resource "aws_subnet" "private" {
   count = length(var.private_subnets) > 0 && (length(var.private_subnets) >= length(var.azs)) ? length(var.private_subnets) : 0
 
-  vpc_id                  = aws_vpc.this.id
-  cidr_block              = element(concat(var.private_subnets, [""]), count.index)
-  availability_zone       = element(concat(var.azs, [""]), count.index)
+  vpc_id            = aws_vpc.this.id
+  cidr_block        = element(concat(var.private_subnets, [""]), count.index)
+  availability_zone = element(concat(var.azs, [""]), count.index)
 
   tags = {
     Name = "${var.name}_private_${count.index}"
   }
+}
+
+################
+# Default Private Subnet Security Group
+################
+resource "aws_security_group" "default_private" {
+  name        = "${var.name}_default_private_sg"
+  description = "${var.name} default private SG"
+  vpc_id      = aws_vpc.this.id
+}
+
+resource "aws_security_group_rule" "ssh-sg" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = var.public_subnets
+  security_group_id = aws_security_group.default_private.id
 }
