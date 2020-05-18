@@ -44,3 +44,18 @@ resource "aws_ssm_parameter" "public_subnet_2" {
   type  = "String"
   value = module.network.public_subnet_2
 }
+resource "aws_ssm_parameter" "private_subnet_0" {
+  name  = "/${var.name}/private_subnet/0"
+  type  = "String"
+  value = module.network.private_subnet_0
+}
+resource "aws_ssm_parameter" "private_subnet_1" {
+  name  = "/${var.name}/private_subnet/1"
+  type  = "String"
+  value = module.network.private_subnet_1
+}
+resource "aws_ssm_parameter" "private_subnet_2" {
+  name  = "/${var.name}/private_subnet/2"
+  type  = "String"
+  value = module.network.private_subnet_2
+}
