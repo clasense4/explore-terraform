@@ -1,4 +1,3 @@
-name                 = "istox"
 cidr_block           = "10.0.0.0/16"
 enable_dns_hostnames = true
 azs                  = ["ap-southeast-1a", "ap-southeast-1b", "ap-southeast-1c"]
