@@ -23,8 +23,9 @@ function deploy() {
 }
 
 function main() {
-    stack=${1:-}
-    env=${2:-}
+    mode=${1:-}
+    stack=${2:-}
+    env=${3:-}
 
     #start available stack
     local _STACK_OPTION_NETWORK="network"
@@ -34,12 +35,10 @@ function main() {
     # Stack choose
     if [ "${stack}" = ${_STACK_OPTION_NETWORK} ]; then
         deploy
-        # terraform plan -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
-        terraform apply -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars" -auto-approve
+        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
-        terraform plan -var-file="../vars/global.tfvars"
-        # terraform apply -var-file="../vars/global.tfvars" -auto-approve
+        terraform ${mode} -var-file="../vars/global.tfvars"
     else
         echo "Stack not found. Available stack : ";
         ( set -o posix ; set ) | grep _STACK_OPTION_ | awk -F= '{print "    " $2}'
