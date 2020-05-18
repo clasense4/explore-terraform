@@ -10,11 +10,12 @@ provider "aws" {
 }
 
 module "network" {
-  source          = "../modules/network"
-  name            = var.name
-  cidr_block      = var.cidr_block
-  tags            = var.tags
-  azs             = var.azs
-  public_subnets  = var.public_subnets
-  private_subnets = var.private_subnets
+  source               = "../modules/network"
+  name                 = var.name
+  cidr_block           = var.cidr_block
+  tags                 = var.tags
+  azs                  = var.azs
+  public_subnets       = var.public_subnets
+  private_subnets      = var.private_subnets
+  enable_dns_hostnames = var.enable_dns_hostnames
 }
