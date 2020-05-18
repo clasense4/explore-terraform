@@ -10,6 +10,9 @@ provider "aws" {
 }
 
 
+################
+# ALB Module
+################
 data "aws_ssm_parameter" "vpc_id" {
   name = "/${var.name}/vpc/id"
 }
@@ -22,7 +25,6 @@ data "aws_ssm_parameter" "public_subnet_1" {
 data "aws_ssm_parameter" "public_subnet_2" {
   name = "/${var.name}/public_subnet/2"
 }
-
 module "alb" {
   source = "../modules/alb"
   name   = var.name
@@ -33,31 +35,26 @@ module "alb" {
     data.aws_ssm_parameter.public_subnet_2.value
   ]
 }
-
-################
-# AWS SSM Parameters Output
-################
 resource "aws_ssm_parameter" "alb_dns" {
   name  = "/${var.name}/alb/dns"
   type  = "String"
   value = module.alb.dns_name
 }
 
+
+################
+# S3 Website Module
+################
 module "s3_website" {
   source      = "../modules/s3_website"
   name        = var.name
   bucket_name = var.bucket_name
 }
-
-################
-# AWS SSM Parameters Output
-################
 resource "aws_ssm_parameter" "bucket_name" {
   name  = "/${var.name}/s3/bucket_name"
   type  = "String"
   value = module.s3_website.bucket_name
 }
-
 resource "aws_ssm_parameter" "public_s3_website" {
   name  = "/${var.name}/s3/website_endpoint"
   type  = "String"
@@ -65,6 +62,9 @@ resource "aws_ssm_parameter" "public_s3_website" {
 }
 
 
+################
+# Cloudfront Module
+################
 data "aws_ssm_parameter" "alb" {
   name = "/${var.name}/alb/dns"
 }
@@ -77,4 +77,9 @@ module "cloudfront" {
   alb_domain_name = data.aws_ssm_parameter.alb.value
 
   cloudfront_path_pattern = "/istox-testing/*"
+}
+resource "aws_ssm_parameter" "cloudfront_output" {
+  name  = "/${var.name}/cloudfront/domain"
+  type  = "String"
+  value = module.cloudfront.domain_name
 }
