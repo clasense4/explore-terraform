@@ -29,7 +29,7 @@ resource "aws_s3_bucket_object" "indexhtml" {
   key    = "index.html"
   source = "s3_object/index.html"
   metadata = {
-    Content-Type = "text/html"
+    "content-type" = "text/html"
   }
   depends_on = [
     aws_s3_bucket.this
