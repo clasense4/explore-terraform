@@ -11,7 +11,8 @@ function deploy() {
     workspace=$(terraform workspace show);
 
     # Deploy
-    echo "Deploying";
+    echo "terraform.sh";
+    echo "Mode      : ${mode}";
     echo "Stack     : ${stack}";
     echo "Env       : ${env}";
     echo "Workspace : ${workspace}";
