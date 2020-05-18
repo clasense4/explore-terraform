@@ -44,7 +44,27 @@ Optional:
 ---
 
 ## Tests
+```
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
 
+Outputs:
+
+instance_private_ip = 10.0.30.32
+instance_public_dns = ec2-54-255-153-186.ap-southeast-1.compute.amazonaws.com
+```
+
+```
+# ~/.ssh/config
+# Public subnet
+Host ec2-54-169-230-144.ap-southeast-1.compute.amazonaws.com
+    User ubuntu
+    IdentityFile ~/.ssh/training_fajri.pem
+# This covers all hosts within my 10.0.0.0/16 private network
+Host 10.0.*
+    User ubuntu
+    IdentityFile ~/.ssh/training_fajri.pem
+    ProxyCommand ssh ubuntu@ec2-54-169-230-144.ap-southeast-1.compute.amazonaws.com -W %h:%p
+```
 ---
 
 ## FAQ

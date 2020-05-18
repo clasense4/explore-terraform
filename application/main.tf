@@ -40,6 +40,11 @@ resource "aws_ssm_parameter" "alb_dns" {
   type  = "String"
   value = module.alb.dns_name
 }
+resource "aws_ssm_parameter" "alb_target_group_arn" {
+  name  = "/${var.name}/alb/target_group/arn"
+  type  = "String"
+  value = module.alb.target_group_arn
+}
 
 
 ################

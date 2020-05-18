@@ -1,26 +1,18 @@
 #!/bin/bash
 sudo apt-get update -y
-sudo apt-get install nginx git zip curl wget php php-mbstring php-json php-xml php-tokenizer php-fpm php-bcmath -y
+sudo apt-get install nginx git zip curl wget php php-fpm -y
 
-cd ~
-php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
-git clone https://github.com/clasense4/laravel.git
-cd /root/laravel
-git checkout 1ddb329c60d6f19290c5107423d065850c1e10e4
-export COMPOSER_HOME=/root
-composer global require "hirak/prestissimo:^0.3"
-composer install -vvv --profile --prefer-dist
-sudo cp .env.example .env
-sudo php artisan key:generate
-
-sudo mv /root/laravel /var/www/laravel
-sudo chown -R www-data:www-data /var/www/laravel
+sudo mkdir /var/www/php
+cat <<EOF | sudo tee /var/www/php/index.php
+<?php
+print_r(\$_SERVER['SERVER_ADDR']);
+EOF
+sudo chown -R www-data:www-data /var/www/php
 sudo rm -rf /etc/nginx/sites-available/example.com
 cat <<EOF | sudo tee /etc/nginx/sites-available/example.com
 server {
     listen 80;
-    root /var/www/laravel/public;
+    root /var/www/php;
     index index.php index.html index.htm index.nginx-debian.html;
 
     location / {
