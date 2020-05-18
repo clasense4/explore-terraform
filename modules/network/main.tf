@@ -24,3 +24,14 @@ resource "aws_subnet" "public" {
     Name = "${var.name}_subnet_${count.index}"
   }
 }
+
+################
+# Internet Gateway
+################
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+
+  tags = {
+    Name = "${var.name}_igw"
+  }
+}
