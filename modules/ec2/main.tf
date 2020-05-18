@@ -5,7 +5,7 @@ resource "aws_instance" "this" {
   associate_public_ip_address = var.associate_public_ip_address
   security_groups             = var.security_groups
   subnet_id                   = var.subnet_id
-
+  user_data                   = file(var.user_data)
   tags = {
     Name        = var.name
     Description = "Managed by terraform"

@@ -28,3 +28,6 @@ variable "subnet_id" {
   description = "Subnet ID"
   type        = string
 }
+variable "user_data" {
+  description = "User data"
+}

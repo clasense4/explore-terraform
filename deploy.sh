@@ -30,7 +30,7 @@ function main() {
     #start available stack
     local _STACK_OPTION_NETWORK="network"
     local _STACK_OPTION_APPLICATION="application"
-    local _STACK_OPTION_TEST_EC2_PRIVATE="test/ec2_private_subnet"
+    local _STACK_OPTION_TEST_EC2="test"
     #end of list
 
     # Stack choose
@@ -40,9 +40,9 @@ function main() {
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
         terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
-    elif [ "${stack}" = ${_STACK_OPTION_TEST_EC2_PRIVATE} ]; then
+    elif [ "${stack}" = ${_STACK_OPTION_TEST_EC2} ]; then
         deploy
-        terraform ${mode} -var-file="../../vars/global.tfvars"
+        terraform ${mode} -var-file="../vars/global.tfvars"
     else
         echo "Stack not found. Available stack : ";
         ( set -o posix ; set ) | grep _STACK_OPTION_ | awk -F= '{print "    " $2}'
