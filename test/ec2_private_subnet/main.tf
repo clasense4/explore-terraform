@@ -20,6 +20,9 @@ module "ec2_private" {
   security_groups             = [data.aws_ssm_parameter.private_sg.value]
   subnet_id                   = data.aws_ssm_parameter.private_subnet.value
 }
+output "instance_private_ip" {
+  value = module.ec2_private.private_ip
+}
 
 data "aws_ssm_parameter" "public_sg" {
   name = "/${var.name}/vpc/subnet/public/sg"
@@ -37,5 +40,7 @@ module "ec2_public" {
   security_groups             = [data.aws_ssm_parameter.public_sg.value]
   subnet_id                   = data.aws_ssm_parameter.public_subnet.value
 }
-
+output "instance_public_dns" {
+  value = module.ec2_public.public_dns
+}
 
