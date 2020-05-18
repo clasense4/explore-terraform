@@ -70,16 +70,10 @@ resource "aws_ssm_parameter" "public_s3_website" {
 ################
 # Cloudfront Module
 ################
-data "aws_ssm_parameter" "alb" {
-  name = "/${var.name}/alb/dns"
-}
-data "aws_ssm_parameter" "s3" {
-  name = "/${var.name}/s3/website_endpoint"
-}
 module "cloudfront" {
   source      = "../modules/cloudfront"
-  s3_website_domain_name = data.aws_ssm_parameter.s3.value
-  alb_domain_name = data.aws_ssm_parameter.alb.value
+  s3_website_domain_name = module.s3_website.website_endpoint
+  alb_domain_name = module.alb.dns_name
 
   cloudfront_path_pattern = "/istox-testing/*"
 }
