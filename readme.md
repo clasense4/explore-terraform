@@ -14,6 +14,12 @@ Todo
 
 ---
 
+## Configuration
+
+Todo
+
+---
+
 ## Created Resources
 
 Required:

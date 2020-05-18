@@ -30,7 +30,7 @@ function main() {
     #start available stack
     local _STACK_OPTION_NETWORK="network"
     local _STACK_OPTION_APPLICATION="application"
-    local _STACK_OPTION_TEST_EC2="test/ec2_private_subnet"
+    local _STACK_OPTION_TEST_EC2_PRIVATE="test/ec2_private_subnet"
     #end of list
 
     # Stack choose
@@ -40,7 +40,7 @@ function main() {
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
         terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
-    elif [ "${stack}" = ${_STACK_OPTION_TEST_EC2} ]; then
+    elif [ "${stack}" = ${_STACK_OPTION_TEST_EC2_PRIVATE} ]; then
         deploy
         terraform ${mode} -var-file="../../vars/global.tfvars"
     else
