@@ -13,14 +13,23 @@ provider "aws" {
 data "aws_ssm_parameter" "vpc_id" {
   name = "/${var.name}/vpc/id"
 }
+data "aws_ssm_parameter" "public_subnet_0" {
+  name = "/${var.name}/public_subnet/0"
+}
+data "aws_ssm_parameter" "public_subnet_1" {
+  name = "/${var.name}/public_subnet/1"
+}
+data "aws_ssm_parameter" "public_subnet_2" {
+  name = "/${var.name}/public_subnet/2"
+}
 
 module "alb" {
   source = "../modules/alb"
   name   = var.name
   vpc_id = data.aws_ssm_parameter.vpc_id.value
   public_subnets_id = [
-    "subnet-0e048ffd0130e4534",
-    "subnet-0ddc7cadb0e3ef1e4",
-    "subnet-02f60cfc4032a0691"
+    data.aws_ssm_parameter.public_subnet_0.value,
+    data.aws_ssm_parameter.public_subnet_1.value,
+    data.aws_ssm_parameter.public_subnet_2.value
   ]
 }
