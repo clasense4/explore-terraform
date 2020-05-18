@@ -28,4 +28,7 @@ resource "aws_s3_bucket_object" "indexhtml" {
   bucket = var.bucket_name
   key    = "index.html"
   source = "s3_object/index.html"
+  depends_on = [
+    aws_s3_bucket.this
+  ]
 }
