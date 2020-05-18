@@ -124,27 +124,3 @@ resource "aws_security_group_rule" "ssh-sg" {
   cidr_blocks       = var.public_subnets
   security_group_id = aws_security_group.default_private.id
 }
-
-################
-# AWS SSM Parameters Output
-################
-resource "aws_ssm_parameter" "vpc_id" {
-  name  = "/${var.name}/vpc/id"
-  type  = "String"
-  value = aws_vpc.this.id
-}
-resource "aws_ssm_parameter" "public_subnet_0" {
-  name  = "/${var.name}/public_subnet/0"
-  type  = "String"
-  value = aws_subnet.public[0].id
-}
-resource "aws_ssm_parameter" "public_subnet_1" {
-  name  = "/${var.name}/public_subnet/1"
-  type  = "String"
-  value = aws_subnet.public[1].id
-}
-resource "aws_ssm_parameter" "public_subnet_2" {
-  name  = "/${var.name}/public_subnet/2"
-  type  = "String"
-  value = aws_subnet.public[2].id
-}

@@ -1,4 +1,19 @@
 output "vpc_id" {
   description = "VPC ID"
-  value       = concat(aws_vpc.this.*.id, [""])[0]
+  value       = aws_vpc.this.id
+}
+
+output "public_subnet_0" {
+  description = "Public Subnet 0"
+  value       = aws_subnet.public[0].id
+}
+
+output "public_subnet_1" {
+  description = "Public Subnet 1"
+  value       = aws_subnet.public[1].id
+}
+
+output "public_subnet_2" {
+  description = "Public Subnet 2"
+  value       = aws_subnet.public[2].id
 }
