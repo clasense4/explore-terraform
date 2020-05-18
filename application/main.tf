@@ -40,77 +40,9 @@ module "s3_website" {
   bucket_name = var.bucket_name
 }
 
-resource "aws_cloudfront_distribution" "s3_distribution" {
-  origin {
-    domain_name = "frontend.serverless.my.id.s3-website-ap-southeast-1.amazonaws.com"
-    origin_id   = "S3-Website-frontend.serverless.my.id.s3-website-ap-southeast-1.amazonaws.com"
-
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1.1"]
-    }
-  }
-
-  origin {
-    domain_name = "istox-aws-alb-1051431446.ap-southeast-1.elb.amazonaws.com"
-    origin_id   = "ALB-istox-aws-alb-1051431446.ap-southeast-1.elb.amazonaws.com"
-
-    custom_origin_config {
-      http_port              = 80
-      https_port             = 443
-      origin_protocol_policy = "http-only"
-      origin_ssl_protocols   = ["TLSv1.1"]
-    }
-  }
-
-  enabled = true
-
-  default_cache_behavior {
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD"]
-    target_origin_id = "S3-Website-frontend.serverless.my.id.s3-website-ap-southeast-1.amazonaws.com"
-
-    forwarded_values {
-      query_string = false
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-    compress               = true
-  }
-
-  # Cache behavior with precedence 0
-  ordered_cache_behavior {
-    path_pattern     = "/istox-testing/*"
-    allowed_methods  = ["DELETE", "GET", "HEAD", "OPTIONS", "PATCH", "POST", "PUT"]
-    cached_methods   = ["GET", "HEAD", "OPTIONS"]
-    target_origin_id = "ALB-istox-aws-alb-1051431446.ap-southeast-1.elb.amazonaws.com"
-
-    forwarded_values {
-      query_string = false
-      headers      = ["Origin"]
-
-      cookies {
-        forward = "none"
-      }
-    }
-
-    viewer_protocol_policy = "redirect-to-https"
-    compress               = true
-  }
-
-  price_class = "PriceClass_200"
-  restrictions {
-    geo_restriction {
-      restriction_type = "none"
-    }
-  }
-  viewer_certificate {
-    cloudfront_default_certificate = true
-  }
+module "cloudfront" {
+  source      = "../modules/cloudfront"
+  s3_website_domain_name = "frontend.serverless.my.id.s3-website-ap-southeast-1.amazonaws.com"
+  alb_domain_name = "istox-aws-alb-1051431446.ap-southeast-1.elb.amazonaws.com"
+  cloudfront_path_pattern = "/istox-testing/*"
 }
