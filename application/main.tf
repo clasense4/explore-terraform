@@ -40,6 +40,21 @@ module "s3_website" {
   bucket_name = var.bucket_name
 }
 
+################
+# AWS SSM Parameters Output
+################
+resource "aws_ssm_parameter" "bucket_name" {
+  name  = "/${var.name}/s3/bucket_name"
+  type  = "String"
+  value = module.s3_website.bucket_name
+}
+
+resource "aws_ssm_parameter" "public_s3_website" {
+  name  = "/${var.name}/s3/website_endpoint"
+  type  = "String"
+  value = module.s3_website.website_endpoint
+}
+
 module "cloudfront" {
   source      = "../modules/cloudfront"
   s3_website_domain_name = "frontend.serverless.my.id.s3-website-ap-southeast-1.amazonaws.com"

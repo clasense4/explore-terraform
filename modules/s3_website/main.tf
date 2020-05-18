@@ -29,18 +29,3 @@ resource "aws_s3_bucket_object" "indexhtml" {
   key    = "index.html"
   source = "s3_object/index.html"
 }
-
-################
-# AWS SSM Parameters Output
-################
-resource "aws_ssm_parameter" "public_s3_website" {
-  name  = "/${var.name}/s3/website_endpoint"
-  type  = "String"
-  value = aws_s3_bucket.this.website_endpoint
-}
-
-resource "aws_ssm_parameter" "bucket_name" {
-  name  = "/${var.name}/s3/bucket_name"
-  type  = "String"
-  value = aws_s3_bucket.this.bucket
-}
