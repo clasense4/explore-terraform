@@ -33,3 +33,9 @@ module "alb" {
     data.aws_ssm_parameter.public_subnet_2.value
   ]
 }
+
+module "s3_website" {
+  source      = "../modules/s3_website"
+  name        = var.name
+  bucket_name = var.bucket_name
+}

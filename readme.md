@@ -2,7 +2,19 @@
 
 > Terraform version 0.12.25
 
-## Resources
+## Introduction
+
+Todo
+
+---
+
+## Installation
+
+Todo
+
+---
+
+## Created Resources
 
 Required:
 - Region: Singapore
@@ -23,3 +35,14 @@ Optional:
     - Forward all request match /custom-pattern/* to the ALB
     - Default behavior to forward all request to Static S3 website hosting
 
+---
+
+## Tests
+
+---
+
+## FAQ
+
+---
+
+## Conclusion

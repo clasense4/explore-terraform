@@ -38,7 +38,7 @@ function main() {
         terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
-        terraform ${mode} -var-file="../vars/global.tfvars"
+        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
     else
         echo "Stack not found. Available stack : ";
         ( set -o posix ; set ) | grep _STACK_OPTION_ | awk -F= '{print "    " $2}'
