@@ -22,8 +22,26 @@ variable "enable_dns_support" {
   default     = true
 }
 
-variable "vpc_tags" {
-  description = "Tags for the VPC"
+variable "tags" {
+  description = "Tags for this module"
   type        = map(string)
   default     = {}
+}
+
+variable "azs" {
+  description = "List of availability zones names in the region"
+  type        = list(string)
+  default     = []
+}
+
+variable "public_subnets" {
+  description = "List of public subnets for the VPC"
+  type        = list(string)
+  default     = []
+}
+
+variable "map_public_ip_on_launch" {
+  description = "Auto assign public IP"
+  type        = bool
+  default     = true
 }
