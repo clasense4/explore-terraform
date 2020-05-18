@@ -1,5 +1,7 @@
 # AWS Networking Demo
 
+> Terraform version 0.12.25
+
 ## Resources
 
 Required:
@@ -9,6 +11,7 @@ Required:
 - 3 Private subnet in all AZ
 - 1 Application Load Balancer that spread in 3 public subnet
 - 1 Bastion instance that receive traffic from VPN
+- Required output is available in SSM
 
 Test:
 - [ ] Instance in Public subnet is accessible by SSH from bastion
