@@ -37,13 +37,13 @@ function main() {
     # Stack choose
     if [ "${stack}" = ${_STACK_OPTION_NETWORK} ]; then
         deploy
-        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
+        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars" -auto-approve
     elif [ "${stack}" = ${_STACK_OPTION_APPLICATION} ]; then
         deploy
-        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars"
+        terraform ${mode} -var-file="../vars/global.tfvars" -var-file="../vars/${stack}.tfvars" -auto-approve
     elif [ "${stack}" = ${_STACK_OPTION_TEST_EC2} ]; then
         deploy
-        terraform ${mode} -var-file="../vars/global.tfvars"
+        terraform ${mode} -var-file="../vars/global.tfvars" -auto-approve
     else
         echo "Stack not found. Available stack : ";
         ( set -o posix ; set ) | grep _STACK_OPTION_ | awk -F= '{print "    " $2}'
