@@ -35,9 +35,9 @@ Anything else can leave by default.
 export AWS_PROFILE=fajri
 export AWS_DEFAULT_REGION="ap-southeast-1"
 
-./terraform.sh apply network prod
-./terraform.sh apply application prod
-./terraform.sh apply test default
+> available mode: apply & destroy.
+
+./terraform.sh apply network prod && ./terraform.sh apply application prod && ./terraform.sh apply test default
 ```
 ---
 
@@ -100,7 +100,7 @@ Retrieve all available value from ssm with this command.
 ```
 # ALB DNS
 aws ssm get-parameter --name /istox/alb/dns | jq -r '.Parameter.Value'
-# Example
+# Example, refresh several times to see load balancing in action
 istox-aws-alb-1503816018.ap-southeast-1.elb.amazonaws.com
 
 # S3 website endpoint
@@ -116,13 +116,13 @@ d1fjc6y2yegq2z.cloudfront.net/istox-testing/1
 d1fjc6y2yegq2z.cloudfront.net/istox-testing/2
 d1fjc6y2yegq2z.cloudfront.net/istox-testing/3
 ```
+
+> Open with google chrome incognito or firefox private browsing to make sure there is no local cache
 ---
 
 ## Destroy
 ```
-./terraform.sh destroy test default
-./terraform.sh destroy application prod
-./terraform.sh destroy network prod
+./terraform.sh destroy test default && ./terraform.sh destroy application prod && ./terraform.sh destroy network prod
 ```
 ---
 
